@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom 3266 -PM- Alliance Stats</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1e1e1e;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #282828;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid #007bff;
+        }
+        header h1 {
+            color: #007bff;
+            font-size: 36px;
+            margin: 0;
+        }
+        header h2 {
+            color: #bbb;
+            margin-top: 10px;
+            font-weight: normal;
+        }
+        table {
+            width: 95%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            background-color: #2c2c2c;
+        }
+        table, th, td {
+            border: 1px solid #444;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        td {
+            background-color: #333;
+            color: #fff;
+        }
+        tbody tr:hover {
+            background-color: #444;
+        }
+        .stats {
+            text-align: center;
+            margin: 30px auto;
+            width: 80%;
+        }
+        .stats div {
+            margin: 15px 0;
+            font-size: 18px;
+        }
+        .stats div strong {
+            color: #007bff;
+        }
+        footer {
+            background-color: #282828;
+            padding: 15px;
+            text-align: center;
+            color: #bbb;
+            font-size: 14px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Kingdom 3266 -PM-</h1>
+        <h2>Alliance Kill & Growth Stats</h2>
+    </header>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Player Name</th>
+                <th>T4 Kills</th>
+                <th>T5 Kills</th>
+                <th>Kill Points (KP)</th>
+                <th>Deaths</th>
+                <th>Expected Goal</th>
+            </tr>
+        </thead>
+        <tbody id="statsBody">
+            <!-- Dynamic rows will be added here using JavaScript -->
+        </tbody>
+    </table>
+
+    <div class="stats">
+        <div><strong>Total Players:</strong> <span id="totalPlayers">0</span></div>
+        <div><strong>Total T4 Kills:</strong> <span id="totalT4Kills">0</span></div>
+        <div><strong>Total T5 Kills:</strong> <span id="totalT5Kills">0</span></div>
+        <div><strong>Total Kill Points:</strong> <span id="totalKP">0</span></div>
+        <div><strong>Total Deaths:</strong> <span id="totalDeaths">0</span></div>
+        <div><strong>Average Expected Goal:</strong> <span id="averageGoal">0</span></div>
+    </div>
+
+    <footer>
+        <p>© 2024 Kingdom 3266 -PM- | For inquiries, <a href="mailto:contact@kingdom3266.com">contact us</a></p>
+    </footer>
+
+    <script>
+        // Function to generate random numbers for stats
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // Add data for 300 players
+        const players = [];
+        for (let i = 1; i <= 300; i++) {
+            players.push({
+                name: `Player ${i}`,
+                t4Kills: getRandomInt(100000, 5000000),
+                t5Kills: getRandomInt(50000, 3000000),
+                killPoints: getRandomInt(5000000, 200000000),
+                deaths: getRandomInt(10000, 500000),
+                expectedGoal: getRandomInt(1, 100)
+            });
+        }
+
+        // Populate table with player stats
+        const statsBody = document.getElementById('statsBody');
+        players.forEach(player => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${player.name}</td>
+                <td>${player.t4Kills.toLocaleString()}</td>
+                <td>${player.t5Kills.toLocaleString()}</td>
+                <td>${player.killPoints.toLocaleString()}</td>
+                <td>${player.deaths.toLocaleString()}</td>
+                <td>${player.expectedGoal}</td>
+            `;
+            statsBody.appendChild(row);
+        });
+
+        // Calculate and update stats
+        function updateStats() {
+            let totalPlayers = players.length;
+            let totalT4Kills = 0;
+            let totalT5Kills = 0;
+            let totalKP = 0;
+            let totalDeaths = 0;
+            let totalGoal = 0;
+
+            players.forEach(player => {
+                totalT4Kills += player.t4Kills;
+                totalT5Kills += player.t5Kills;
+                totalKP += player.killPoints;
+                totalDeaths += player.deaths;
+                totalGoal += player.expectedGoal;
+            });
+
+            const averageGoal = totalGoal / totalPlayers;
+
+            // Update the displayed stats
+            document.getElementById('totalPlayers').textContent = totalPlayers;
+            document.getElementById('totalT4Kills').textContent = totalT4Kills.toLocaleString();
+            document.getElementById('totalT5Kills').textContent = totalT5Kills.toLocaleString();
+            document.getElementById('totalKP').textContent = totalKP.toLocaleString();
+            document.getElementById('totalDeaths').textContent = totalDeaths.toLocaleString();
+            document.getElementById('averageGoal').textContent = averageGoal.toFixed(2);
+        }
+
+        // Call the function to update stats on page load
+        updateStats();
+    </script>
+</body>
+</html>
